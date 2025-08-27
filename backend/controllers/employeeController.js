@@ -36,3 +36,25 @@ export const addEmployee = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const addTaskEmployee = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const taskData = req.body;
+
+    const updateTaskEmployee = await Employees.findByIdAndUpdate(
+      employeeId,
+      { $push: { tasks: taskData } },
+      { new: true }
+    );
+
+    if (!updateTaskEmployee) {
+      return res.status(404).json({ message: "Employee not found!" });
+    }
+
+    res.status(200).json(updateTaskEmployee);
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
