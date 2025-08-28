@@ -2,14 +2,14 @@ import { createContext, useState, useContext } from "react";
 import type { ReactNode } from "react";
 
 type AuthContextType = {
-  role: "HR" | "Client";
-  setRole: (role: "HR" | "Client") => void;
+  role: "HR" | "Client" | "Employee";
+  setRole: (role: "HR" | "Client" | "Employee") => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [role, setRole] = useState<"HR" | "Client">("HR");
+  const [role, setRole] = useState<"HR" | "Client" | "Employee">("HR");
 
   return (
     <AuthContext.Provider value={{ role, setRole }}>
