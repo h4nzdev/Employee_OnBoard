@@ -13,6 +13,7 @@ import {
   UserPlus,
   ClipboardList,
   Clock,
+  Briefcase,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -27,7 +28,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
   // Simple menu items (no dropdowns)
   const simpleMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { label: "Reports", icon: FileText, path: "/reports" },
+    { label: "Job Offer", icon: Briefcase, path: "/job-offer" },
     { label: "Settings", icon: Settings, path: "/settings" },
   ];
 

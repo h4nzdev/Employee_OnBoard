@@ -2,13 +2,13 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import HRDashboard from "../pages/HR Pages/HRDashboard";
 import HREmployees from "../pages/HR Pages/HREmployees";
-import HRReports from "../pages/HR Pages/HRReports";
 import HRTimeOff from "../pages/HR Pages/HRTimeOff";
 import HRTaskProgress from "../pages/HR Pages/HRTaskProgress";
 import HRSettings from "../pages/HR Pages/HRSettings";
 import HRClientRequirements from "../pages/HR Pages/HRClientRequirements";
 import HRClientPending from "../pages/HR Pages/HRClientPending";
 import SpecificClientRequirements from "../components/HRComponents/HRClient/FullViewRequirements/SpecificClientRequirements";
+import HRJobOffers from "../pages/HR Pages/HRJobOffer";
 
 const HRRoutes = () => {
   return (
@@ -31,10 +31,10 @@ const HRRoutes = () => {
           }
         />
         <Route
-          path="/reports"
+          path="/job-offer"
           element={
             <MainLayout>
-              <HRReports />
+              <HRJobOffers />
             </MainLayout>
           }
         />

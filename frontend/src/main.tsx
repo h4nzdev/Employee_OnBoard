@@ -5,13 +5,16 @@ import App from "./App.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { EmployeeProvider } from "./context/EmployeeContext.tsx";
 import { ClientProvider } from "./context/ClientContext.tsx";
+import { JobOfferProvider } from "./context/JobOfferContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <EmployeeProvider>
         <ClientProvider>
-          <App />
+          <JobOfferProvider>
+            <App />
+          </JobOfferProvider>
         </ClientProvider>
       </EmployeeProvider>
     </AuthProvider>
