@@ -8,7 +8,7 @@ const HREmployeesTableBody = () => {
     <tbody className="divide-y divide-slate-800">
       {employees.map((employee) => (
         <tr
-          key={employee.id}
+          key={employee._id}
           className="hover:bg-slate-800/60 transition-colors"
         >
           <td className="py-4 px-6">

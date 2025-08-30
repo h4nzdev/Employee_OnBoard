@@ -1,5 +1,21 @@
 import Clients from "../model/clientModel.js";
 
+//Get all client
+export const getAllClient = async (req, res) => {
+  try {
+    const clients = await Clients.find();
+
+    if (!clients) {
+      return res.status(404).json({ message: "No client can be found!" });
+    }
+
+    res.status(200).json(clients);
+  } catch (error) {
+    console.error("Error: ", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Add a new client
 export const addClient = async (req, res) => {
   try {
@@ -10,7 +26,12 @@ export const addClient = async (req, res) => {
       return res.status(400).json({ message: "Client already exists!" });
     }
 
-    const newClient = await Clients.create({ name, email, status, requirements: [] });
+    const newClient = await Clients.create({
+      name,
+      email,
+      status,
+      requirements: [],
+    });
 
     res.status(201).json(newClient);
   } catch (error) {
@@ -22,7 +43,8 @@ export const addClient = async (req, res) => {
 // Add a requirement to a client using $push
 export const addRequirement = async (req, res) => {
   try {
-    const { clientId, requirement } = req.body;
+    const { clientId } = req.params;
+    const { requirement } = req.body;
     // requirement is an object: { title, type, status, dueDate, submittedDate, description }
 
     const updatedClient = await Clients.findByIdAndUpdate(
