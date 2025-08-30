@@ -2,8 +2,12 @@ import HRPendingClientStats from "../../components/HRComponents/HRClient/ClientP
 import HRPendingClientTableHead from "../../components/HRComponents/HRClient/ClientPending/HRPendingClientTableHead";
 import HRPendingClientTableBody from "../../components/HRComponents/HRClient/ClientPending/HRPendingClientTableBody";
 import HRPendingClientActionButtons from "../../components/HRComponents/HRClient/ClientPending/HRPendingClientActionButtons";
+import { useContext } from "react";
+import ClientContext from "../../context/ClientContext";
+import TableActionButton from "../../components/TableActionButton";
 
 export default function HRClientPending() {
+  const { client } = useContext(ClientContext);
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       <div className="mb-6">
@@ -25,8 +29,13 @@ export default function HRClientPending() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <HRPendingClientTableHead />
-            <HRPendingClientTableBody />
+            {client.length === 0 ? (
+              <td className="py-4 px-6 text-2xl">No Client Found</td>
+            ) : (
+              <HRPendingClientTableBody />
+            )}
           </table>
+          <TableActionButton />
         </div>
       </div>
     </div>

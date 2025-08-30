@@ -1,13 +1,13 @@
-// src/types/clients.ts
 export type Requirement = {
   _id: string;
   title: string;
-  priority: "High" | "Medium" | "Low";
-  status: "Pending" | "Completed";
+  name: string;
+  priority: "Low" | "Medium" | "High";
+  status: "Pending" | "In Progress" | "Submitted";
   type: string;
-  dueDate: string;
-  submittedDate: string | null;
-  description: string;
+  dueDate: string | null;        // ISO string from Mongo
+  submittedDate: string | null;  // can be null
+  description?: string;
 };
 
 export type Client = {
@@ -15,7 +15,7 @@ export type Client = {
   name: string;
   email: string;
   status: string;
-  requirements: Requirement[];
+  requirements?: Requirement[];
   createdAt: string;
   updatedAt: string;
 };

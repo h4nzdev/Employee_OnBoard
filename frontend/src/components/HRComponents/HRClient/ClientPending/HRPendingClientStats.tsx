@@ -1,13 +1,18 @@
 import { AlertCircle, Clock, FileText, User } from "lucide-react";
+import { useContext } from "react";
+import ClientContext from "../../../../context/ClientContext";
 
 const HRPendingClientStats = () => {
+  const { client } = useContext(ClientContext);
+
+  const pendingLen = client.filter((c) => c.status == "Pending").length;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <div className="bg-slate-900 rounded-xl border border-slate-800 p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-slate-400 text-sm">Total Pending</p>
-            <p className="text-2xl font-bold text-slate-100">15</p>
+            <p className="text-2xl font-bold text-slate-100">{pendingLen}</p>
           </div>
           <Clock className="w-8 h-8 text-yellow-400" />
         </div>

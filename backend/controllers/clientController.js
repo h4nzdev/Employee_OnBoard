@@ -44,12 +44,12 @@ export const addClient = async (req, res) => {
 export const addRequirement = async (req, res) => {
   try {
     const { clientId } = req.params;
-    const { requirement } = req.body;
+    const { requirements } = req.body;
     // requirement is an object: { title, type, status, dueDate, submittedDate, description }
 
     const updatedClient = await Clients.findByIdAndUpdate(
       clientId,
-      { $push: { requirements: requirement } },
+      { $push: { requirements: requirements } },
       { new: true } // return the updated document
     );
 

@@ -2,8 +2,12 @@ import HRClientRequirementsHeader from "../../components/HRComponents/HRClient/C
 import HRClientRequirementsTableHead from "../../components/HRComponents/HRClient/ClientRequirements/HRClientRequirementsTableHead";
 import HRClientRequirementsTableBody from "../../components/HRComponents/HRClient/ClientRequirements/HRClientRequirementsTableBody";
 import TableActionButton from "../../components/TableActionButton";
+import { useContext } from "react";
+import ClientContext from "../../context/ClientContext";
+import { requirements } from "../../data/requirements";
 
 export default function HRClientRequirements() {
+  const { client } = useContext(ClientContext);
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       <div className="mb-6">
@@ -24,10 +28,14 @@ export default function HRClientRequirements() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <HRClientRequirementsTableHead />
-            <HRClientRequirementsTableBody />
+            {client.length === 0 ? (
+              <td className="py-4 px-6">No Client Requirements</td>
+            ) : (
+              <HRClientRequirementsTableBody />
+            )}
           </table>
+          <TableActionButton />
         </div>
-        <TableActionButton />
       </div>
     </div>
   );
