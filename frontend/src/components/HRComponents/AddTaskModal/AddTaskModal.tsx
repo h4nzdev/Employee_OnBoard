@@ -9,6 +9,7 @@ import DatePickers from "./DatePickers";
 import ProgressSlider from "./ProgressSlider";
 import DescriptionInput from "./DescriptionInput";
 import AssigneeSelect from "./AssigneeSelect";
+import Swal from "sweetalert2";
 
 export default function AddTaskModal({ setIsOpen }: any) {
   const { employees, fetchEmployee } = useContext(EmployeeContext);
@@ -65,6 +66,17 @@ export default function AddTaskModal({ setIsOpen }: any) {
         progress: 0,
         description: "",
       });
+
+      Swal.fire({
+        title: "New Message",
+        text: "Task added successfully.",
+        icon: "info", // optional: "success", "error", "warning"
+        background: "#1e293b", // slate-800
+        color: "#f1f5f9", // text color
+        confirmButtonColor: "#0f172a", // slate-900
+        confirmButtonText: "Close",
+      });
+
       fetchEmployee();
       setIsOpen(false);
       setEmployeeId("");
@@ -73,7 +85,7 @@ export default function AddTaskModal({ setIsOpen }: any) {
     }
   };
 
-  console.log(employeeId)
+  console.log(employeeId);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">

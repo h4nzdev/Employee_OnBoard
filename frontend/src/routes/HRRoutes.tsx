@@ -8,6 +8,7 @@ import HRTaskProgress from "../pages/HR Pages/HRTaskProgress";
 import HRSettings from "../pages/HR Pages/HRSettings";
 import HRClientRequirements from "../pages/HR Pages/HRClientRequirements";
 import HRClientPending from "../pages/HR Pages/HRClientPending";
+import SpecificClientRequirements from "../components/HRComponents/HRClient/FullViewRequirements/SpecificClientRequirements";
 
 const HRRoutes = () => {
   return (
@@ -74,6 +75,14 @@ const HRRoutes = () => {
           element={
             <MainLayout>
               <HRSettings />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/client-requirements/:id"
+          element={
+            <MainLayout>
+              <SpecificClientRequirements />
             </MainLayout>
           }
         />

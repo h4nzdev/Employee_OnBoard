@@ -14,6 +14,8 @@ export type Client = {
   _id: string;
   name: string;
   email: string;
+  type: string
+  progress: number
   status: string;
   requirements?: Requirement[];
   createdAt: string;

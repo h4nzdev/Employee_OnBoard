@@ -1,21 +1,21 @@
-const HRClientRequirementsTableHead = () => {
+const SpecifiClientRequirementsTHead = () => {
   return (
     <thead>
       <tr className="border-b border-slate-800">
         <th className="text-left py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
-          Client Name
+          Requirement
         </th>
         <th className="text-left py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
-          Progress
+          Priority
         </th>
         <th className="text-left py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
           Status
         </th>
         <th className="text-left py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
-          Type
+          Submitted
         </th>
         <th className="text-left py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
-          Submitted
+          Due Date
         </th>
         <th className="text-right py-3 px-6 text-xs font-medium text-slate-400 uppercase tracking-wider">
           Actions
@@ -25,4 +25,4 @@ const HRClientRequirementsTableHead = () => {
   );
 };
 
-export default HRClientRequirementsTableHead;
+export default SpecifiClientRequirementsTHead;

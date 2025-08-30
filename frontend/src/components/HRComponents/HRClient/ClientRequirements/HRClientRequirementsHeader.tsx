@@ -1,6 +1,9 @@
 import { Download, Filter, Plus, Search } from "lucide-react";
+import AddRequirementsModal from "../../AddRequirementsModal/AddRequirementsModal";
+import { useState } from "react";
 
 const HRClientRequirementsHeader = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -30,10 +33,11 @@ const HRClientRequirementsHeader = () => {
           <Download className="w-4 h-4" />
           <span>Export</span>
         </button>
-        <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+        <button onClick={() => setIsOpen(true)} className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
           <Plus className="w-4 h-4" />
           <span>Add Document</span>
         </button>
+        {isOpen && <AddRequirementsModal setIsOpen={setIsOpen}/>}
       </div>
     </div>
   );
