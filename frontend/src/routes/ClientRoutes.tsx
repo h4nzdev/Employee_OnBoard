@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ClientDashboard from "../pages/Client Pages/ClientDashboard";
 import ClientLayout from "../layout/ClientLayout";
 import ClientJobOffers from "../pages/Client Pages/ClientJobOffer";
+import ClientMyApplication from "../pages/Client Pages/ClientMyApplication";
 
 const ClientRoutes = () => {
   return (
@@ -20,6 +21,14 @@ const ClientRoutes = () => {
           element={
             <ClientLayout>
               <ClientJobOffers />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/my-applications"
+          element={
+            <ClientLayout>
+              <ClientMyApplication />
             </ClientLayout>
           }
         />
