@@ -9,7 +9,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [role, setRole] = useState<"HR" | "Client" | "Employee">("HR");
+  const [role, setRole] = useState<"HR" | "Client" | "Employee">("Client");
 
   return (
     <AuthContext.Provider value={{ role, setRole }}>

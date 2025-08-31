@@ -1,4 +1,8 @@
+import { useState } from "react";
+import AddJobOfferModal from "../AddJobOffer/AddJobOfferModal";
+
 const HRJobOffersTable = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div className="px-6 py-4 border-b border-slate-800">
       <div className="flex items-center justify-between">
@@ -6,7 +10,10 @@ const HRJobOffersTable = () => {
           Available Positions
         </h3>
         <div className="flex space-x-2">
-          <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700"
+          >
             Add Job
           </button>
           <button className="px-4 py-2 bg-slate-700 text-slate-300 text-sm rounded-lg hover:bg-slate-600">
@@ -14,6 +21,7 @@ const HRJobOffersTable = () => {
           </button>
         </div>
       </div>
+      {isOpen && <AddJobOfferModal setIsOpen={setIsOpen} />}
     </div>
   );
 };
