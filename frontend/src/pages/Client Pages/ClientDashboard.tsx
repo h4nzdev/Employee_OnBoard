@@ -17,7 +17,7 @@ import {
 export default function JobApplicantDashboard() {
   return (
     <div className="min-h-screen bg-slate-900">
-      <div className="flex-1 ml-64 p-6 min-h-screen">
+      <div className="flex-1 p-6 min-h-screen">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-100 mb-2">
             Welcome Back, Alex Johnson

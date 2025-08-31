@@ -10,6 +10,7 @@ import {
   User,
   UserPlus,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ClientSidebar = () => {
   return (
@@ -47,9 +48,11 @@ const ClientSidebar = () => {
             </div>
 
             <div className="ml-6 mt-1 space-y-1">
-              <div className="w-full text-left px-3 py-2 rounded-lg transition-all duration-200 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-300">
-                Available Jobs
-              </div>
+              <Link to="/client/job-offer">
+                <div className="w-full text-left px-3 py-2 rounded-lg transition-all duration-200 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-300">
+                  Available Jobs
+                </div>
+              </Link>
               <div className="w-full text-left px-3 py-2 rounded-lg transition-all duration-200 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-300">
                 My Applications
               </div>

@@ -8,7 +8,7 @@ const ClientLayout = ({ children }: any) => {
         <ClientSidebar />
         {/* Main content */}
         <div className="transition-all duration-300 flex-1 flex flex-col min-h-screen bg-slate-900">
-          <main className="p-8 bg-slate-900">{children}</main>
+          <main className="p-8 bg-slate-900 ml-64">{children}</main>
         </div>
       </div>
     </div>

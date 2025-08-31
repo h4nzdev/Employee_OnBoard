@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ClientDashboard from "../pages/Client Pages/ClientDashboard";
 import ClientLayout from "../layout/ClientLayout";
+import ClientJobOffers from "../pages/Client Pages/ClientJobOffer";
 
 const ClientRoutes = () => {
   return (
@@ -11,6 +12,14 @@ const ClientRoutes = () => {
           element={
             <ClientLayout>
               <ClientDashboard />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/job-offer"
+          element={
+            <ClientLayout>
+              <ClientJobOffers />
             </ClientLayout>
           }
         />

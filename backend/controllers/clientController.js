@@ -17,10 +17,25 @@ export const getAllClient = async (req, res) => {
 };
 
 // Add a new client
+// Add a new client
+// Add a new client (with status + type, simple skills)
 export const addClient = async (req, res) => {
   try {
-    const { name, email, status } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      appliedJob, // job offer ID
+      experienceLevel,
+      linkedinProfile,
+      applicationDate,
+      skills, // keep simple: send as ["React","Node"]
+      notes,
+      status, // ✅ put back
+      type, // ✅ put back
+    } = req.body;
 
+    // prevent duplicate by email (keep this from your original)
     const existingClient = await Clients.findOne({ email });
     if (existingClient) {
       return res.status(400).json({ message: "Client already exists!" });
@@ -29,8 +44,16 @@ export const addClient = async (req, res) => {
     const newClient = await Clients.create({
       name,
       email,
+      phone,
+      appliedJob,
+      experienceLevel,
+      linkedinProfile,
+      applicationDate: applicationDate || Date.now(),
+      skills,
+      notes,
       status,
-      requirements: [],
+      type, 
+      requirements: [], 
     });
 
     res.status(201).json(newClient);

@@ -1,5 +1,5 @@
 export type JobOffer = {
-  id: string;
+  _id: string;
   title: string;
   category: string;
   slots: number;
