@@ -39,13 +39,14 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
         name: "",
         email: "",
         phone: "",
-        appliedJob: setJobId(undefined), // still keeps jobId!
+        appliedJob: jobId, // still keeps jobId!
         experienceLevel: "",
         linkedinProfile: "",
         applicationDate: new Date().toISOString().split("T")[0], // default today
         skills: "",
         notes: "",
       });
+      setJobId(undefined)
       setIsOpen(false);
       alert("Applaction has been process");
     } catch (error) {

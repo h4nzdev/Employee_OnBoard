@@ -3,6 +3,8 @@ import ClientDashboard from "../pages/Client Pages/ClientDashboard";
 import ClientLayout from "../layout/ClientLayout";
 import ClientJobOffers from "../pages/Client Pages/ClientJobOffer";
 import ClientMyApplication from "../pages/Client Pages/ClientMyApplication";
+import ClientRequiredDocument from "../pages/Client Pages/ClientRequiredDocuments";
+import ClientProfile from "../pages/Client Pages/ClientProfile";
 
 const ClientRoutes = () => {
   return (
@@ -29,6 +31,22 @@ const ClientRoutes = () => {
           element={
             <ClientLayout>
               <ClientMyApplication />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/required-documents"
+          element={
+            <ClientLayout>
+              <ClientRequiredDocument />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/profile"
+          element={
+            <ClientLayout>
+              <ClientProfile />
             </ClientLayout>
           }
         />

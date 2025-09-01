@@ -1,10 +1,15 @@
 import { Clock, DollarSign, MapPin, Users } from "lucide-react";
 
 const ClientJobOfferGrid = ({ job, setJobId, setIsOpen }: any) => {
+  const appliedJob = "68b303b97196a68b55b44e58";
+  const applied = appliedJob.includes(job._id);
+
+  console.log(applied);
+
   return (
     <div
       key={job._id}
-      className="bg-slate-900 rounded-xl border border-slate-800 p-6 hover:border-slate-700 transition-colors"
+      className="bg-slate-900 rounded-xl border border-slate-800 p-6 hover:border-slate-700 transition-colors flex flex-col h-full"
     >
       <div className="flex flex-row items-start justify-between mb-4">
         <div className="flex-1">
@@ -40,19 +45,24 @@ const ClientJobOfferGrid = ({ job, setJobId, setIsOpen }: any) => {
         </div>
       </div>
 
-      <p className="text-slate-400 text-sm mb-4 line-clamp-2">
+      <p className="text-slate-400 text-sm mb-4 line-clamp-2 flex-grow">
         {job.description}
       </p>
 
-      <button
-        onClick={() => {
-          setJobId(job._id);
-          setIsOpen(true);
-        }}
-        className="w-full px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Apply Now
-      </button>
+      <div className="mt-auto pt-2">
+        <button
+          onClick={() => {
+            setJobId(job._id);
+            setIsOpen(true);
+          }}
+          disabled={applied}
+          className={`w-full px-4 py-2 ${
+            applied ? "bg-slate-600" : "bg-blue-600 hover:bg-blue-700"
+          } text-white text-sm rounded-lg transition-colors`}
+        >
+          {applied ? "Already Applied" : "Apply now"}
+        </button>
+      </div>
     </div>
   );
 };

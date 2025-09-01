@@ -16,9 +16,6 @@ export const getAllClient = async (req, res) => {
   }
 };
 
-// Add a new client
-// Add a new client
-// Add a new client (with status + type, simple skills)
 export const addClient = async (req, res) => {
   try {
     const {
