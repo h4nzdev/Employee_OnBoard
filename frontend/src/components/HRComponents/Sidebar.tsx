@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -16,10 +16,12 @@ import {
   Briefcase,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setRole } = useAuth();
 
   // State for dropdown menus
   const [clientDropdownOpen, setClientDropdownOpen] = useState(false);
@@ -206,7 +208,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
 
         {/* Sign Out Button */}
         <div className="absolute bottom-4 left-4 right-4 border-t pt-4 border-slate-600">
-          <button className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors flex items-center space-x-3">
+          <button onClick={() => setRole("Client")} className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors flex items-center space-x-3">
             <LogOut className="w-5 h-5" />
             <span>Sign Out</span>
           </button>

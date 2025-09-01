@@ -13,10 +13,12 @@ import {
   UserPlus,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const ClientSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setRole } = useAuth();
 
   // State for dropdown menus
   const [jobsDropdownOpen, setJobsDropdownOpen] = useState(false);
@@ -200,7 +202,7 @@ const ClientSidebar = () => {
 
         {/* Sign Out Button */}
         <div className="absolute bottom-4 left-4 right-4 border-t pt-4 border-slate-600">
-          <button className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors flex items-center space-x-3">
+          <button onClick={() => setRole("HR")} className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors flex items-center space-x-3">
             <LogOut className="w-5 h-5" />
             <span>Sign Out</span>
           </button>

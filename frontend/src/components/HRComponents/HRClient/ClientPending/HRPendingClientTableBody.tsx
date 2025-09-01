@@ -1,10 +1,25 @@
 import { CheckCircle, XCircle } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ClientContext from "../../../../context/ClientContext";
+import axios from "axios";
 
 const HRPendingClientTableBody = () => {
-  const { client } = useContext(ClientContext);
+  const { client, fetchClients } = useContext(ClientContext);
   const pendingClient = client.filter((c) => c.status === "Pending");
+
+  const handleSubmit = async (id: string, newStatus: string) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/client/update-client/${id}`,
+        { status: newStatus }
+      );
+      console.log(res.data);
+      fetchClients();
+      alert(`Client ${newStatus === "Approve" ? "Approve" : "Reject"}`);
+    } catch (error) {
+      console.error("Server error");
+    }
+  };
 
   return (
     <tbody className="divide-y divide-slate-800">
@@ -44,11 +59,23 @@ const HRPendingClientTableBody = () => {
                 {client.createdAt.slice(1, 10)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                <button className="text-green-400 hover:text-green-300">
-                  <CheckCircle className="w-4 h-4" />
+                <button
+                  type="button"
+                  className="text-green-400 hover:text-green-300"
+                >
+                  <CheckCircle
+                    onClick={() => handleSubmit(client._id, "Approve")}
+                    className="w-4 h-4"
+                  />
                 </button>
-                <button className="text-red-400 hover:text-red-300">
-                  <XCircle className="w-4 h-4" />
+                <button
+                  type="button"
+                  className="text-red-400 hover:text-red-300"
+                >
+                  <XCircle
+                    onClick={() => handleSubmit(client._id, "Reject")}
+                    className="w-4 h-4"
+                  />
                 </button>
               </td>
             </tr>

@@ -52,8 +52,8 @@ export const addClient = async (req, res) => {
       skills,
       notes,
       status,
-      type, 
-      requirements: [], 
+      type,
+      requirements: [],
     });
 
     res.status(201).json(newClient);
@@ -84,5 +84,27 @@ export const addRequirement = async (req, res) => {
   } catch (error) {
     console.error("Error adding requirement:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const approved = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    const updateStatus = await Clients.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updateStatus) {
+      return res.status(401).json({ error: "Client not found" });
+    }
+
+    res.status(200).json({ client: updateStatus, message: "Approved" });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Server error" });
   }
 };
