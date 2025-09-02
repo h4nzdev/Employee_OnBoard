@@ -13,14 +13,16 @@ import {
   GraduationCap,
   AlertCircle,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function JobApplicantDashboard() {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen bg-slate-900">
       <div className="flex-1 p-6 min-h-screen">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-100 mb-2">
-            Welcome Back, Alex Johnson
+            Welcome Back, {user.name}
           </h2>
           <p className="text-slate-400">
             Track your applications and explore new opportunities at TechCorp

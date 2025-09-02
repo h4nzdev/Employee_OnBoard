@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { X, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginPage = () => {
+  const [activeTab, setActiveTab] = useState("Client");
   const [showPassword, setShowPassword] = useState(false);
+  const { setUser, setRole } = useAuth();
 
   // Login form data
   const [formData, setFormData] = useState({
@@ -18,130 +23,177 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Login submitted:", formData);
+    try {
+      if (activeTab === "Client") {
+        const res = await axios.post("http://localhost:3000/client/login", formData);
+        setUser(res.data);
+        setRole(res.data.role);
+        setFormData({
+          email: "",
+          password: "",
+        });
+
+        console.log(res.data);
+      }
+    } catch (error) {}
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">
-      {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-b from-slate-800 to-slate-900 items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-700/20 to-slate-900/40"></div>
-        <div className="relative z-10 text-center px-12">
-          <div className="w-24 h-24 bg-slate-600 rounded-full mx-auto mb-8 flex items-center justify-center">
-            <div className="w-12 h-12 bg-slate-300 rounded-lg"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-md">
+        {/* Logo/Branding */}
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-slate-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+            <div className="w-10 h-10 bg-slate-300 rounded-lg"></div>
           </div>
-          <h1 className="text-4xl font-bold text-slate-100 mb-4">Welcome Back</h1>
-          <p className="text-slate-300 text-lg leading-relaxed">
-            Sign in to access your employee dashboard and manage your workspace efficiently.
-          </p>
+          <h1 className="text-3xl font-bold text-slate-100 mb-2">
+            Welcome Back
+          </h1>
+          <p className="text-slate-400">Please sign in to your account</p>
         </div>
-      </div>
 
-      {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-slate-100 mb-2">Employee Login</h2>
-            <p className="text-slate-400">Please sign in to your account</p>
+        {/* Login Card */}
+        <div className="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
+          {/* Tabs */}
+          <div className="flex">
+            <button
+              onClick={() => setActiveTab("HR")}
+              className={`flex-1 py-4 px-6 text-sm font-semibold transition-all duration-200 ${
+                activeTab === "HR"
+                  ? "bg-blue-600 text-white border-b-2 border-blue-400"
+                  : "bg-slate-700/50 text-slate-300 hover:bg-slate-700/70 hover:text-slate-100"
+              }`}
+            >
+              HR Portal
+            </button>
+            <button
+              onClick={() => setActiveTab("Client")}
+              className={`flex-1 py-4 px-6 text-sm font-semibold transition-all duration-200 ${
+                activeTab === "Client"
+                  ? "bg-blue-600 text-white border-b-2 border-blue-400"
+                  : "bg-slate-700/50 text-slate-300 hover:bg-slate-700/70 hover:text-slate-100"
+              }`}
+            >
+              Client Portal
+            </button>
           </div>
 
-          {/* Form */}
-          <div className="space-y-6">
-            {/* Email */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-300">
-                Email Address <span className="text-red-400">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email address"
-                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                required
-              />
-            </div>
-
-            {/* Password */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-300">
-                Password <span className="text-red-400">*</span>
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 pr-12"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between pt-2">
-              <label className="flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-slate-600 bg-slate-800/50 text-blue-600 focus:ring-blue-500 focus:ring-2 focus:ring-offset-0"
-                />
-                <span className="ml-3 text-sm text-slate-300">Remember me</span>
-              </label>
-              <button
-                type="button"
-                className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
-              >
-                Forgot password?
-              </button>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-            >
-              Sign In
-            </button>
-
-            {/* Register Link */}
-            <div className="text-center pt-6 border-t border-slate-700">
-              <p className="text-slate-400">
-                Don't have an account?{" "}
-                <button
-                  type="button"
-                  className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
-                >
-                  Register here
-                </button>
+          <div className="p-8">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-slate-100 mb-2">
+                {activeTab === "HR" ? "HR Login" : "Client Login"}
+              </h2>
+              <p className="text-slate-400 text-sm">
+                {activeTab === "Client"
+                  ? "Access employee management dashboard"
+                  : "Access your client dashboard"}
               </p>
             </div>
-          </div>
 
-          {/* Mobile Branding */}
-          <div className="lg:hidden mt-12 text-center">
-            <div className="w-16 h-16 bg-slate-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <div className="w-8 h-8 bg-slate-300 rounded-md"></div>
-            </div>
-            <p className="text-slate-400 text-sm">Your trusted employee portal</p>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-300">
+                  Email Address <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder={
+                    activeTab === "HR"
+                      ? "Enter your HR email address"
+                      : "Enter your client email address"
+                  }
+                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  required
+                />
+              </div>
+
+              {/* Password */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-300">
+                  Password <span className="text-red-400">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 pr-12"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Remember Me & Forgot Password */}
+              <div className="flex items-center justify-between pt-2">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-800/50 text-blue-600 focus:ring-blue-500 focus:ring-2 focus:ring-offset-0"
+                  />
+                  <span className="ml-3 text-sm text-slate-300">
+                    Remember me
+                  </span>
+                </label>
+                <button
+                  type="button"
+                  className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                >
+                  Forgot password?
+                </button>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              >
+                Sign In as {activeTab === "HR" ? "HR" : "Client"}
+              </button>
+
+              {/* Register Link */}
+              <div className="text-center pt-6 border-t border-slate-700">
+                <p className="text-slate-400">
+                  {activeTab === "HR" ? "New HR member?" : "New client?"}{" "}
+                  <Link to="/register">
+                    <button
+                      type="button"
+                      className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                    >
+                      Register here
+                    </button>
+                  </Link>
+                </p>
+              </div>
+            </form>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-slate-500 text-sm">
+            Secure {activeTab === "HR" ? "HR management" : "client access"}{" "}
+            portal
+          </p>
         </div>
       </div>
     </div>

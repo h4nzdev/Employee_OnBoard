@@ -21,6 +21,8 @@ const ClientSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, default: "" },
+    password: { type: String, required: true },
+    role: { type: String, default: "Client" },
     type: { type: String, default: "New Registration" },
     status: {
       type: String,
