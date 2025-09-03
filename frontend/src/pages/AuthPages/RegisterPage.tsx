@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { X, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { setUser, setRole } = useAuth();
 
   // Registration form data
   const [formData, setFormData] = useState({
@@ -27,11 +33,86 @@ const RegisterPage = () => {
       ...prev,
       [name]: value,
     }));
+    // Clear error when user types
+    if (error) setError("");
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Registration submitted:", formData);
+
+    // Basic validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.skills ||
+      !formData.experienceLevel
+    ) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      // Create client registration data
+      const clientData = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        skills: formData.skills,
+        experienceLevel: formData.experienceLevel,
+        linkedinProfile: formData.linkedinProfile,
+        applicationDate: formData.applicationDate,
+        notes: formData.notes,
+      };
+
+      // Send registration request
+      const res = await axios.post(
+        "http://localhost:3000/client/register",
+        clientData
+      );
+
+      // Store user data in context
+      setUser(res.data);
+      setRole(res.data.role);
+
+      // Store user data in session storage
+      sessionStorage.setItem("user", JSON.stringify(res.data));
+      sessionStorage.setItem("role", res.data.role);
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        type: "New Registration",
+        skills: "",
+        experienceLevel: "",
+        linkedinProfile: "",
+        applicationDate: new Date().toISOString().split("T")[0],
+        notes: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Navigate to dashboard
+      navigate("/dashboard");
+    } catch (err: any) {
+      console.error("Registration error:", err);
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -286,13 +367,21 @@ const RegisterPage = () => {
               />
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 text-red-100 px-4 py-3 rounded-xl">
+                {error}
+              </div>
+            )}
+
             {/* Submit Button */}
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </button>
 
             {/* Login Link */}

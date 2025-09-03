@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 
 const LoginPage = () => {
   const [activeTab, setActiveTab] = useState("Client");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const { setUser, setRole } = useAuth();
 
   // Login form data
@@ -21,23 +24,59 @@ const LoginPage = () => {
       ...prev,
       [name]: value,
     }));
+    // Clear error when user types
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!formData.email || !formData.password) {
+      setError("Please enter both email and password");
+      return;
+    }
+    
     try {
+      setLoading(true);
+      setError("");
+      
+      let res;
       if (activeTab === "Client") {
-        const res = await axios.post("http://localhost:3000/client/login", formData);
+        res = await axios.post("http://localhost:3000/client/login", formData);
+        // Store user data in context
         setUser(res.data);
         setRole(res.data.role);
-        setFormData({
-          email: "",
-          password: "",
-        });
-
-        console.log(res.data);
+        
+        // Store user data in session storage
+        sessionStorage.setItem('user', JSON.stringify(res.data));
+        sessionStorage.setItem('role', res.data.role);
+      } else if (activeTab === "HR") {
+        res = await axios.post("http://localhost:3000/hr/login", formData);
+        // Store user data in context
+        setUser(res.data);
+        setRole(res.data.role);
+        
+        // Store user data in session storage
+        sessionStorage.setItem('user', JSON.stringify(res.data));
+        sessionStorage.setItem('role', res.data.role);
       }
-    } catch (error) {}
+      
+      // Reset form
+      setFormData({
+        email: "",
+        password: "",
+      });
+      
+      // Navigate to dashboard
+      navigate("/dashboard");
+      
+    } catch (err: any) {
+      console.error("Login error:", err);
+      setError(err.response?.data?.error || "Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -162,12 +201,20 @@ const LoginPage = () => {
                 </button>
               </div>
 
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-500/20 border border-red-500/50 text-red-100 px-4 py-3 rounded-xl mb-4">
+                  {error}
+                </div>
+              )}
+              
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Sign In as {activeTab === "HR" ? "HR" : "Client"}
+                {loading ? "Logging in..." : `Sign In as ${activeTab === "HR" ? "HR" : "Client"}`}
               </button>
 
               {/* Register Link */}
