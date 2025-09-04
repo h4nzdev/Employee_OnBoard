@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
 
 const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
   // formData state
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    appliedJob: jobId, // still keeps jobId!
-    experienceLevel: "",
-    linkedinProfile: "",
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    jobOfferId: jobId, // still keeps jobId!
+    experienceLevel: user.exprinceLevel,
+    linkedinProfile: user.linkedinProfile,
     applicationDate: new Date().toISOString().split("T")[0], // default today
-    skills: "",
-    notes: "",
+    skills: user.skills,
+    notes: user.notes,
   });
 
   // handle change
@@ -31,7 +33,7 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:3000/client/add-client",
+        "http://localhost:3000/add/application",
         formData
       );
       console.log(res.data);
@@ -39,14 +41,14 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
         name: "",
         email: "",
         phone: "",
-        appliedJob: jobId, // still keeps jobId!
+        jobOfferId: jobId, // still keeps jobId!
         experienceLevel: "",
         linkedinProfile: "",
         applicationDate: new Date().toISOString().split("T")[0], // default today
         skills: "",
         notes: "",
       });
-      setJobId(undefined)
+      setJobId(undefined);
       setIsOpen(false);
       alert("Applaction has been process");
     } catch (error) {
@@ -59,9 +61,7 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
       <div className="bg-slate-900 rounded-xl border border-slate-800 shadow-sm w-full max-w-2xl">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-slate-100">
-            Add Client Applicant
-          </h2>
+          <h2 className="text-xl font-bold text-slate-100">Apply Job</h2>
           <button
             onClick={() => setIsOpen(false)}
             className="text-slate-400 hover:text-slate-100"
@@ -214,7 +214,7 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
-              Add Applicant
+              Apply Job
             </button>
           </div>
         </form>

@@ -18,6 +18,6 @@ const JobOfferSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const JobOffers = mongoose.model("job_offers", JobOfferSchema);
+const JobOffers = mongoose.model("JobOffer", JobOfferSchema, "job_offers");
 
 export default JobOffers;

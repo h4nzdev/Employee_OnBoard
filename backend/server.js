@@ -6,6 +6,7 @@ import employeeRouter from "./routes/employeeRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
 import jobOfferRouter from "./routes/jobOfferRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 dotenv.config();
 
@@ -20,5 +21,6 @@ app.use("/employees", employeeRouter);
 app.use("/client", clientRoutes);
 app.use("/job-offer", jobOfferRouter);
 app.use("/", authRouter);
+app.use("/", applicationRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on port : ${PORT}`));
