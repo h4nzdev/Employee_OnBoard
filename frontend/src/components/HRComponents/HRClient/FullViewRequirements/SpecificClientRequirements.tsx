@@ -1,28 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-import ClientContext from "../../../../context/ClientContext";
-import type { Requirement } from "../../../../types/client";
+import ApplicationContext from "../../../../context/ApplicationContext";
+import type { Requirement } from "../../../../types/client"; // you can keep this type if it matches your application requirements
 import { useParams } from "react-router-dom";
 import SpecifiClientRequirementsTHead from "./SpecifiClientRequirementsTHead";
 import SpecificClientRequirementsTBody from "./SpecificClientRequirementsTBody";
 import SpecificClientRequirementsHeader from "./SpecificClientRequirementsHeader";
 
 export default function ClientRequirementsDetail() {
-  const { client } = useContext(ClientContext);
+  const { applications }: any = useContext(ApplicationContext);
   const { id } = useParams();
-  const specClient = client.find((c) => c._id === id);
+  const specApplication = applications.find((a: any) => a._id === id);
   const [requirements, setRequirements] = useState<Requirement[]>([]);
 
   useEffect(() => {
-    if (specClient) {
-      // If this client has requirements, set them, otherwise empty array
-      setRequirements(specClient.requirements ?? []);
+    if (specApplication) {
+      // If this application has requirements, set them, otherwise empty array
+      setRequirements(specApplication.requirements ?? []);
     }
-  }, [client, specClient]);
+  }, [applications, specApplication]);
 
   return (
     <div className="bg-slate-900 rounded-xl border border-slate-800 shadow-sm">
-      {/* Header with Client Info */}
-      <SpecificClientRequirementsHeader specClient={specClient} />
+      {/* Header with Application Info */}
+      <SpecificClientRequirementsHeader specClient={specApplication} />
+
       {/* Requirements Table */}
       <div className="px-6 py-4 border-b border-slate-800">
         <h4 className="text-md font-medium text-slate-200">
@@ -35,7 +36,10 @@ export default function ClientRequirementsDetail() {
           <SpecifiClientRequirementsTHead />
           <tbody className="divide-y divide-slate-800">
             {requirements.map((requirement) => (
-              <SpecificClientRequirementsTBody requirement={requirement} />
+              <SpecificClientRequirementsTBody
+                key={requirement._id}
+                requirement={requirement}
+              />
             ))}
           </tbody>
         </table>

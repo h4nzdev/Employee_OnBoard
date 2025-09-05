@@ -1,10 +1,21 @@
 import { Clock, DollarSign, MapPin, Users } from "lucide-react";
+import { useAuth } from "../../../context/AuthContext";
+import { useContext } from "react";
+import ApplicationContext from "../../../context/ApplicationContext";
 
 const ClientJobOfferGrid = ({ job, setJobId, setIsOpen }: any) => {
-  const appliedJob = "68b303b97196a68b55b44e58";
-  const applied = appliedJob.includes(job._id);
+  const { user } = useAuth();
+  const { applications } = useContext(ApplicationContext);
 
-  console.log(applied);
+  // Filter applications of the logged-in client
+  const filterApplication = applications.filter(
+    (a) => String(a.client) === String(user._id)
+  );
+
+  // Check if the client already applied to this job
+  const applied = filterApplication.some(
+    (a) => String(a.jobOffer?._id || a.jobOffer) === String(job._id)
+  );
 
   return (
     <div
@@ -57,7 +68,9 @@ const ClientJobOfferGrid = ({ job, setJobId, setIsOpen }: any) => {
           }}
           disabled={applied}
           className={`w-full px-4 py-2 ${
-            applied ? "bg-slate-600" : "bg-blue-600 hover:bg-blue-700"
+            applied
+              ? "bg-slate-600 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           } text-white text-sm rounded-lg transition-colors`}
         >
           {applied ? "Already Applied" : "Apply now"}

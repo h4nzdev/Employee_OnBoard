@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useContext, useState } from "react";
-import ClientContext from "../../../context/ClientContext";
+import ApplicationContext from "../../../context/ApplicationContext";
 import axios from "axios";
 import AddRequirementsPriorityStatus from "./AddRequirementsPriorityStatus";
 import AddRequirementsType from "./AddRequirementsType";
@@ -11,9 +11,13 @@ import AddRequirementName from "./AddRequirementName";
 import Swal from "sweetalert2";
 
 export default function AddRequirementsModal({ setIsOpen }: any) {
-  const { client, fetchClients } = useContext(ClientContext);
-  const [clientId, setClientId] = useState<string>();
-  const approveClient = client.filter((c) => c.status === "Approve");
+  const { applications, fetchApplications }: any =
+    useContext(ApplicationContext);
+  const [applicationId, setApplicationId] = useState<string>();
+  const approveApplications = applications.filter(
+    (a: any) => a.status === "Approve"
+  );
+
   const [formData, setFormData] = useState({
     title: "",
     name: "",
@@ -25,10 +29,10 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
     description: "",
   });
 
-  // ✅ Cleaner function for handling client selection
-  const handleClientChange = (id: string) => {
-    const selected = client.find((c) => c._id === id);
-    setClientId(id);
+  // ✅ Handle Application selection
+  const handleApplicationChange = (id: string) => {
+    const selected = applications.find((a: any) => a._id === id);
+    setApplicationId(id);
     setFormData({
       ...formData,
       name: selected ? selected.name : "",
@@ -38,18 +42,19 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
   const handleSubmitRequirements = async (e: any) => {
     e.preventDefault();
 
-    if (!clientId) {
-      return alert("Please add select client");
+    if (!applicationId) {
+      return alert("Please select an application");
     }
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/client/add-requirements/${clientId}`,
+        `http://localhost:3000/application/add-requirements/${applicationId}`,
         { requirements: formData }
       );
       if (!res) {
-        return console.log("Error to add the data");
+        return console.log("Error adding requirement");
       }
+
       setFormData({
         title: "",
         name: "",
@@ -62,9 +67,9 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
       });
 
       Swal.fire({
-        title: "New Message",
+        title: "Success 🎉",
         text: "Requirement added successfully.",
-        icon: "info", // optional: "success", "error", "warning"
+        icon: "success",
         background: "#1e293b", // slate-800
         color: "#f1f5f9", // text color
         confirmButtonColor: "#0f172a", // slate-900
@@ -72,8 +77,8 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
       });
 
       setIsOpen(false);
-      setClientId(undefined);
-      fetchClients();
+      setApplicationId(undefined);
+      fetchApplications();
       console.log(formData);
     } catch (error) {
       console.log("Error: ", error);
@@ -105,12 +110,12 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
 
             {/* Name */}
             <AddRequirementName
-              clientId={clientId}
-              handleClientChange={handleClientChange}
-              approveClient={approveClient}
+              clientId={applicationId}
+              handleClientChange={handleApplicationChange}
+              approveClient={approveApplications}
             />
 
-            {/* Priority and Status Row */}
+            {/* Priority and Status */}
             <AddRequirementsPriorityStatus
               formData={formData}
               setFormData={setFormData}
@@ -122,7 +127,7 @@ export default function AddRequirementsModal({ setIsOpen }: any) {
               setFormData={setFormData}
             />
 
-            {/*Submitted & Due Date */}
+            {/* Submitted & Due Date */}
             <AddRequirementsDueSubmittedDate
               formData={formData}
               setFormData={setFormData}

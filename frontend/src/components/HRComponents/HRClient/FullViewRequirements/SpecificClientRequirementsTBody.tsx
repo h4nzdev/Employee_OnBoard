@@ -35,10 +35,10 @@ const SpecificClientRequirementsTBody = ({ requirement }: any) => {
         </span>
       </td>
       <td className="py-4 px-6 text-sm text-slate-400">
-        {requirement.submittedDate.slice(1, 10) || "N/A"}
+        {requirement?.submittedDate?.slice(1, 10) || "In process"}
       </td>
       <td className="py-4 px-6 text-sm text-slate-400">
-        {requirement.dueDate.slice(1, 10) || "N/A"}
+        {requirement?.dueDate?.slice(1, 10) || "N/A"}
       </td>
       <td className="py-4 px-6 text-right">
         <button className="text-slate-500 hover:text-slate-300 transition-colors">

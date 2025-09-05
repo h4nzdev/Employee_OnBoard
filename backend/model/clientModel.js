@@ -34,7 +34,7 @@ const ClientSchema = new mongoose.Schema(
     // 🔹 Job reference
     appliedJob: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "job_offers",
+      ref: "Applications",
     }, // Position Applied For
 
     // 🔹 Experience level

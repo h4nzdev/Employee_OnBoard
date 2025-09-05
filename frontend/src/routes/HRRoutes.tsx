@@ -79,7 +79,7 @@ const HRRoutes = () => {
           }
         />
         <Route
-          path="/client-requirements/:id"
+          path="/application-requirements/:id"
           element={
             <MainLayout>
               <SpecificClientRequirements />

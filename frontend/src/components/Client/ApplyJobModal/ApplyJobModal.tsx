@@ -16,6 +16,7 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
     applicationDate: new Date().toISOString().split("T")[0], // default today
     skills: user.skills,
     notes: user.notes,
+    client: user._id,
   });
 
   // handle change
@@ -47,6 +48,7 @@ const ApplyJobModal = ({ setIsOpen, setJobId, jobId }: any) => {
         applicationDate: new Date().toISOString().split("T")[0], // default today
         skills: "",
         notes: "",
+        client: undefined,
       });
       setJobId(undefined);
       setIsOpen(false);
