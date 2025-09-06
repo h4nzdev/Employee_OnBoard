@@ -5,6 +5,7 @@ import ClientJobOffers from "../pages/Client Pages/ClientJobOffer";
 import ClientMyApplication from "../pages/Client Pages/ClientMyApplication";
 import ClientRequiredDocument from "../pages/Client Pages/ClientRequiredDocuments";
 import ClientProfile from "../pages/Client Pages/ClientProfile";
+import ClientDocumentsSubmit from "../pages/Client Pages/ClientDocumentsSubmit";
 
 const ClientRoutes = () => {
   return (
@@ -47,6 +48,14 @@ const ClientRoutes = () => {
           element={
             <ClientLayout>
               <ClientProfile />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/submit-requirement/:id"
+          element={
+            <ClientLayout>
+              <ClientDocumentsSubmit />
             </ClientLayout>
           }
         />

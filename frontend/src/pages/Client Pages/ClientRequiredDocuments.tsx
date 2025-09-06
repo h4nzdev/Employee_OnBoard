@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { getPriorityColor, getStatusColor } from "../../utils/client_req_table";
 import ApplicationContext from "../../context/ApplicationContext";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const ClientRequiredDocument = () => {
   const { user } = useAuth();
@@ -65,9 +66,13 @@ const ClientRequiredDocument = () => {
                 >
                   <td className="py-4 px-6">
                     <div>
-                      <div className="font-medium text-slate-100">
+                      {/* ✅ Make requirement title clickable */}
+                      <Link
+                        to={`/client/submit-requirement/${req._id}`}
+                        className="font-medium text-slate-100 hover:underline"
+                      >
                         {req.title}
-                      </div>
+                      </Link>
                       <div className="text-sm text-slate-400 mt-1">
                         {req.type}
                       </div>
