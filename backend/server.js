@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import employeeRouter from "./routes/employeeRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
 import jobOfferRouter from "./routes/jobOfferRoutes.js";
 import authRouter from "./routes/authRoutes.js";
@@ -17,7 +16,6 @@ app.use(cors());
 connectDB();
 const PORT = process.env.PORT || 3000;
 
-app.use("/employees", employeeRouter);
 app.use("/client", clientRoutes);
 app.use("/job-offer", jobOfferRouter);
 app.use("/", authRouter);

@@ -1,9 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import HRDashboard from "../pages/HR Pages/HRDashboard";
-import HREmployees from "../pages/HR Pages/HREmployees";
-import HRTimeOff from "../pages/HR Pages/HRTimeOff";
-import HRTaskProgress from "../pages/HR Pages/HRTaskProgress";
 import HRSettings from "../pages/HR Pages/HRSettings";
 import HRClientRequirements from "../pages/HR Pages/HRClientRequirements";
 import HRClientPending from "../pages/HR Pages/HRClientPending";
@@ -23,26 +20,10 @@ const HRRoutes = () => {
           }
         />
         <Route
-          path="/employees"
-          element={
-            <MainLayout>
-              <HREmployees />
-            </MainLayout>
-          }
-        />
-        <Route
           path="/job-offer"
           element={
             <MainLayout>
               <HRJobOffers />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/time-off"
-          element={
-            <MainLayout>
-              <HRTimeOff />
             </MainLayout>
           }
         />
@@ -59,14 +40,6 @@ const HRRoutes = () => {
           element={
             <MainLayout>
               <HRClientPending />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/tasks-progress"
-          element={
-            <MainLayout>
-              <HRTaskProgress />
             </MainLayout>
           }
         />

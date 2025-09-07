@@ -1,16 +1,12 @@
-"use client";
-
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   LayoutDashboard,
   Users,
-  FileText,
   Settings,
   LogOut,
   X,
   ChevronDown,
   ChevronRight,
-  UserPlus,
   ClipboardList,
   Clock,
   Briefcase,
@@ -25,7 +21,6 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
 
   // State for dropdown menus
   const [clientDropdownOpen, setClientDropdownOpen] = useState(false);
-  const [employeesDropdownOpen, setEmployeesDropdownOpen] = useState(false);
 
   // Simple menu items (no dropdowns)
   const simpleMenuItems = [
@@ -40,20 +35,8 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     { label: "Pending Client", path: "/pending-client" },
   ];
 
-  // Employees dropdown items
-  const employeeItems = [
-    { label: "Employees", path: "/employees" },
-    { label: "Tasks Progress", path: "/tasks-progress" },
-    { label: "Time Off", path: "/time-off" },
-  ];
-
   // Quick action buttons
   const quickActions = [
-    {
-      label: "Add Employee",
-      icon: UserPlus,
-      action: () => navigate("/employees/add"),
-    },
     {
       label: "New Report",
       icon: ClipboardList,
@@ -145,43 +128,6 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           </div>
 
           {/* Employees Dropdown */}
-          <div>
-            <button
-              onClick={() => setEmployeesDropdownOpen(!employeesDropdownOpen)}
-              className="w-full text-left px-3 py-2 rounded-lg transition-all duration-200 flex items-center justify-between text-slate-300 hover:bg-slate-800"
-            >
-              <div className="flex items-center space-x-3">
-                <Users className="w-5 h-5" />
-                <span>Employees</span>
-              </div>
-              {employeesDropdownOpen ? (
-                <ChevronDown className="w-4 h-4" />
-              ) : (
-                <ChevronRight className="w-4 h-4" />
-              )}
-            </button>
-
-            {employeesDropdownOpen && (
-              <div className="ml-6 mt-1 space-y-1">
-                {employeeItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  return (
-                    <button
-                      key={item.label}
-                      onClick={() => navigate(item.path)}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-200 text-sm ${
-                        isActive
-                          ? "bg-slate-800/80 text-blue-400 border-r-4 border-blue-400"
-                          : "text-slate-400 hover:bg-slate-800 hover:text-slate-300"
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Quick Actions Section */}
@@ -208,11 +154,11 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
 
         {/* Sign Out Button */}
         <div className="absolute bottom-4 left-4 right-4 border-t pt-4 border-slate-600">
-          <button 
+          <button
             onClick={() => {
               logout();
               navigate("/login");
-            }} 
+            }}
             className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors flex items-center space-x-3"
           >
             <LogOut className="w-5 h-5" />

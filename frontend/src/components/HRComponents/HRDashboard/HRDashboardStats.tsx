@@ -1,13 +1,10 @@
 import { CalendarX, Clock, UserPlus, Users } from "lucide-react";
 import { useContext } from "react";
-import EmployeeContext from "../../../context/EmployeeContext";
+
+import ApplicationContext from "../../../context/ApplicationContext";
 
 const HRDashboardStats = () => {
-  const { employees } = useContext(EmployeeContext);
-
-  const pendingLength: any = employees.filter(
-    (employee) => employee.status === "Pending"
-  ).length;
+  const { applications } = useContext(ApplicationContext);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
       <div className="bg-slate-900 rounded-xl p-6 border border-slate-800 shadow-sm">
@@ -17,7 +14,7 @@ const HRDashboardStats = () => {
               Total Employees
             </p>
             <p className="text-2xl font-bold text-slate-100">
-              {employees?.length}
+              {applications?.length}
             </p>
             <p className="text-xs text-green-400 mt-1">↑ 12% from last month</p>
           </div>
@@ -46,7 +43,7 @@ const HRDashboardStats = () => {
             <p className="text-sm font-medium text-slate-400 mb-1">
               Pending Reviews
             </p>
-            <p className="text-2xl font-bold text-slate-100">{pendingLength}</p>
+            <p className="text-2xl font-bold text-slate-100">10</p>
             <p className="text-xs text-amber-400 mt-1">Due this week</p>
           </div>
           <div className="w-12 h-12 bg-amber-900/30 rounded-lg flex items-center justify-center">

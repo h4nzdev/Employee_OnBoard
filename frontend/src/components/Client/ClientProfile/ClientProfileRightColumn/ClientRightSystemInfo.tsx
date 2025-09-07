@@ -1,4 +1,7 @@
+import { useAuth } from "../../../../context/AuthContext";
+
 const ClientRightSystemInfo = () => {
+  const { user } = useAuth();
   return (
     <div>
       <h2 className="text-2xl font-bold text-slate-100 mb-6">
@@ -9,13 +12,13 @@ const ClientRightSystemInfo = () => {
           <div>
             <span className="text-slate-400 font-medium">Created</span>
             <div className="text-slate-200 mt-1">
-              August 31, 2025 • 01:20:32
+              {user.createdAt.slice(1, 10)}
             </div>
           </div>
           <div>
             <span className="text-slate-400 font-medium">Last Updated</span>
             <div className="text-slate-200 mt-1">
-              August 31, 2025 • 01:59:31
+              {user.updatedAt.slice(1, 10)}
             </div>
           </div>
         </div>
