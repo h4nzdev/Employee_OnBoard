@@ -5,6 +5,8 @@ import ClientJobOffers from "../pages/Client Pages/ClientJobOffer";
 import ClientMyApplication from "../pages/Client Pages/ClientMyApplication";
 import ClientRequiredDocument from "../pages/Client Pages/ClientRequiredDocuments";
 import ClientProfile from "../pages/Client Pages/ClientProfile";
+import ClientInterviews from "../pages/Client Pages/ClientInterviews";
+import ClientInterviewSchedule from "../pages/Client Pages/ClientInterviewSchedule";
 import ClientDocumentsSubmit from "../pages/Client Pages/ClientDocumentsSubmit";
 
 const ClientRoutes = () => {
@@ -48,6 +50,22 @@ const ClientRoutes = () => {
           element={
             <ClientLayout>
               <ClientProfile />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/interviews"
+          element={
+            <ClientLayout>
+              <ClientInterviews />
+            </ClientLayout>
+          }
+        />
+        <Route
+          path="/client/interviews/schedule"
+          element={
+            <ClientLayout>
+              <ClientInterviewSchedule />
             </ClientLayout>
           }
         />

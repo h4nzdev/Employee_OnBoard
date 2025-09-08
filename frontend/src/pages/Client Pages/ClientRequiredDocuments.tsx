@@ -66,13 +66,9 @@ const ClientRequiredDocument = () => {
                 >
                   <td className="py-4 px-6">
                     <div>
-                      {/* ✅ Make requirement title clickable */}
-                      <Link
-                        to={`/client/submit-requirement/${req._id}`}
-                        className="font-medium text-slate-100 hover:underline"
-                      >
+                      <div className="font-medium text-slate-100">
                         {req.title}
-                      </Link>
+                      </div>
                       <div className="text-sm text-slate-400 mt-1">
                         {req.type}
                       </div>
@@ -105,9 +101,14 @@ const ClientRequiredDocument = () => {
                     {req.dueDate ? req.dueDate.split("T")[0] : "N/A"}
                   </td>
                   <td className="py-4 px-6 text-right">
-                    <button className="text-slate-500 hover:text-slate-300 transition-colors">
-                      <MoreHorizontal className="w-5 h-5" />
-                    </button>
+                    <Link to={`/client/submit-requirement/${req._id}`}>
+                      <button
+                        disabled={req.status === "Submitted"}
+                        className="inline-flex items-center px-3 py-1.5 rounded-md bg-blue-600 text-white text-sm hover:bg-blue-500"
+                      >
+                        Submit File
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))

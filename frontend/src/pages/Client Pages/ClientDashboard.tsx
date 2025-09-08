@@ -9,14 +9,17 @@ import {
   Building2,
   Send,
   MapPin,
-  DollarSign,
   GraduationCap,
   AlertCircle,
+  PhilippinePeso,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { useContext } from "react";
+import JobOfferContext from "../../context/JobOfferContext";
 
 export default function JobApplicantDashboard() {
   const { user } = useAuth();
+  const { jobOffer } = useContext(JobOfferContext);
   return (
     <div className="min-h-screen bg-slate-900">
       <div className="flex-1 p-6 min-h-screen">
@@ -83,66 +86,29 @@ export default function JobApplicantDashboard() {
 
           <div className="p-6">
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="text-slate-100 font-medium">
-                    Senior Frontend Developer
-                  </h4>
-                  <div className="flex items-center space-x-4 mt-1">
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      San Francisco, CA
-                    </p>
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      $120k - $150k
-                    </p>
+              {jobOffer.map((job) => (
+                <div
+                  key={job._id}
+                  className="flex items-center justify-between p-4 bg-slate-800 rounded-lg"
+                >
+                  <div className="flex-1">
+                    <h4 className="text-slate-100 font-medium">{job.title}</h4>
+                    <div className="flex items-center space-x-4 mt-1">
+                      <p className="text-slate-400 text-sm flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {job.location}
+                      </p>
+                      <p className="text-slate-400 text-sm flex items-center">
+                        <PhilippinePeso size={14} />
+                        {job.salaryRange}
+                      </p>
+                    </div>
                   </div>
+                  <span className="px-3 py-1 bg-green-900 text-green-300 text-xs font-medium rounded-full">
+                    {job.status}
+                  </span>
                 </div>
-                <span className="px-3 py-1 bg-green-900 text-green-300 text-xs font-medium rounded-full">
-                  New
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="text-slate-100 font-medium">
-                    Product Manager
-                  </h4>
-                  <div className="flex items-center space-x-4 mt-1">
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      Remote
-                    </p>
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      $100k - $130k
-                    </p>
-                  </div>
-                </div>
-                <span className="px-3 py-1 bg-blue-900 text-blue-300 text-xs font-medium rounded-full">
-                  Applied
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="text-slate-100 font-medium">UX Designer</h4>
-                  <div className="flex items-center space-x-4 mt-1">
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      New York, NY
-                    </p>
-                    <p className="text-slate-400 text-sm flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      $90k - $110k
-                    </p>
-                  </div>
-                </div>
-                <span className="px-3 py-1 bg-yellow-900 text-yellow-300 text-xs font-medium rounded-full">
-                  Urgent
-                </span>
-              </div>
+              ))}
             </div>
           </div>
         </div>

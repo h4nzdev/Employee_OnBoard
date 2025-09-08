@@ -123,3 +123,45 @@ export const addRequirement = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Upload file and mark requirement as Submitted
+export const uploadRequirementFile = async (req, res) => {
+  try {
+    const { applicationId, requirementId } = req.body;
+
+    if (!applicationId || !requirementId) {
+      return res.status(400).json({ message: "applicationId and requirementId are required" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const filePath = `/uploads/${req.file.filename}`;
+
+    // update the nested requirement: set status Submitted, submittedDate now, and store file path
+    const updated = await Application.findOneAndUpdate(
+      { _id: applicationId, "requirements._id": requirementId },
+      {
+        $set: {
+          "requirements.$.status": "Submitted",
+          "requirements.$.submittedDate": new Date(),
+          "requirements.$.file": filePath,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Application or requirement not found" });
+    }
+
+    res.status(200).json({
+      message: "File uploaded and requirement marked as submitted",
+      file: filePath,
+      application: updated,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

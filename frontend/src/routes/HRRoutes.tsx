@@ -6,6 +6,7 @@ import HRClientRequirements from "../pages/HR Pages/HRClientRequirements";
 import HRClientPending from "../pages/HR Pages/HRClientPending";
 import SpecificClientRequirements from "../components/HRComponents/HRClient/FullViewRequirements/SpecificClientRequirements";
 import HRJobOffers from "../pages/HR Pages/HRJobOffer";
+import HRInterviews from "../pages/HR Pages/HRInterviews";
 
 const HRRoutes = () => {
   return (
@@ -24,6 +25,14 @@ const HRRoutes = () => {
           element={
             <MainLayout>
               <HRJobOffers />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/interviews"
+          element={
+            <MainLayout>
+              <HRInterviews />
             </MainLayout>
           }
         />

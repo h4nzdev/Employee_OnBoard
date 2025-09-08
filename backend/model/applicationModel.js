@@ -14,6 +14,7 @@ const RequirementSchema = new mongoose.Schema({
   dueDate: { type: Date, required: true },
   submittedDate: { type: Date, default: null },
   description: { type: String, default: "" },
+  file: { type: String, default: null },
 });
 
 // 🔹 Main Application schema

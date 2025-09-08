@@ -26,6 +26,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const simpleMenuItems = [
     { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
     { label: "Job Offer", icon: Briefcase, path: "/job-offer" },
+    { label: "Interviews", icon: Clock, path: "/interviews" },
     { label: "Settings", icon: Settings, path: "/settings" },
   ];
 
