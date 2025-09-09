@@ -2,9 +2,17 @@ import {
   getPriorityColor,
   getStatusColor,
 } from "../../../../utils/client_req_table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Eye } from "lucide-react";
 
-const SpecificClientRequirementsTBody = ({ requirement }: any) => {
+interface SpecificClientRequirementsTBodyProps {
+  requirement: any;
+  onViewRequirement: (requirement: any) => void;
+}
+
+const SpecificClientRequirementsTBody = ({
+  requirement,
+  onViewRequirement,
+}: SpecificClientRequirementsTBodyProps) => {
   return (
     <tr
       key={requirement._id}
@@ -41,9 +49,25 @@ const SpecificClientRequirementsTBody = ({ requirement }: any) => {
         {requirement?.dueDate?.slice(1, 10) || "N/A"}
       </td>
       <td className="py-4 px-6 text-right">
-        <button className="text-slate-500 hover:text-slate-300 transition-colors">
-          <MoreHorizontal className="w-5 h-5" />
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={() => onViewRequirement(requirement)}
+            disabled={requirement.status !== "Submitted"}
+            className={`flex items-center gap-1 px-3 py-1.5 rounded text-sm transition-colors ${
+              requirement.status === "Submitted"
+                ? "text-blue-400 hover:text-blue-300 hover:bg-blue-900/20"
+                : "text-slate-500 cursor-not-allowed"
+            }`}
+            title={
+              requirement.status === "Submitted"
+                ? "View submitted file"
+                : "File not submitted yet"
+            }
+          >
+            <Eye className="w-4 h-4" />
+            View
+          </button>
+        </div>
       </td>
     </tr>
   );

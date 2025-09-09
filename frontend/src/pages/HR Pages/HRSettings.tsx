@@ -1,6 +1,8 @@
 import { Save, User, Bell, Shield } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function HRSettings() {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       <div className="mb-6">
@@ -27,7 +29,7 @@ export default function HRSettings() {
                 </label>
                 <input
                   type="text"
-                  defaultValue="John Smith"
+                  defaultValue={user.name}
                   className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -37,7 +39,7 @@ export default function HRSettings() {
                 </label>
                 <input
                   type="email"
-                  defaultValue="john.smith@company.com"
+                  defaultValue={user.email}
                   className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>

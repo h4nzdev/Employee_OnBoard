@@ -4,7 +4,6 @@ import HRClientRequirementsTableBody from "../../components/HRComponents/HRClien
 import TableActionButton from "../../components/TableActionButton";
 import { useContext } from "react";
 import ClientContext from "../../context/ClientContext";
-import { requirements } from "../../data/requirements";
 
 export default function HRClientRequirements() {
   const { client } = useContext(ClientContext);

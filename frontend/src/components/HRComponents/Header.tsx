@@ -1,6 +1,8 @@
 import { Bell, Menu } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 const Header = ({ isOpen, setIsOpen }: any) => {
+  const { user } = useAuth();
   return (
     <header className="bg-slate-900/80 backdrop-blur border-b border-slate-700 sticky top-0 z-30">
       <div className="px-6 py-4">
@@ -27,10 +29,12 @@ const Header = ({ isOpen, setIsOpen }: any) => {
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center">
-                <span className="text-slate-200 font-medium text-sm">JD</span>
+                <span className="text-slate-200 font-medium text-sm">
+                  {user.name.slice(0, 1)}
+                </span>
               </div>
               <span className="text-sm font-medium text-slate-200">
-                John Doe
+                {user.name}
               </span>
             </div>
           </div>

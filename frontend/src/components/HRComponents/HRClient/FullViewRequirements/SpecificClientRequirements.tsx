@@ -5,12 +5,15 @@ import { useParams } from "react-router-dom";
 import SpecifiClientRequirementsTHead from "./SpecifiClientRequirementsTHead";
 import SpecificClientRequirementsTBody from "./SpecificClientRequirementsTBody";
 import SpecificClientRequirementsHeader from "./SpecificClientRequirementsHeader";
+import RequirementViewModal from "../../RequirementView/RequirementViewModal";
 
 export default function ClientRequirementsDetail() {
   const { applications }: any = useContext(ApplicationContext);
   const { id } = useParams();
   const specApplication = applications.find((a: any) => a._id === id);
   const [requirements, setRequirements] = useState<Requirement[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequirement, setSelectedRequirement] = useState<any>(null);
 
   useEffect(() => {
     if (specApplication) {
@@ -18,6 +21,18 @@ export default function ClientRequirementsDetail() {
       setRequirements(specApplication.requirements ?? []);
     }
   }, [applications, specApplication]);
+
+  // Handle viewing a requirement
+  const handleViewRequirement = (requirement: any) => {
+    setSelectedRequirement(requirement);
+    setIsModalOpen(true);
+  };
+
+  // Handle closing the modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequirement(null);
+  };
 
   return (
     <div className="bg-slate-900 rounded-xl border border-slate-800 shadow-sm">
@@ -39,6 +54,7 @@ export default function ClientRequirementsDetail() {
               <SpecificClientRequirementsTBody
                 key={requirement._id}
                 requirement={requirement}
+                onViewRequirement={handleViewRequirement}
               />
             ))}
           </tbody>
@@ -54,6 +70,13 @@ export default function ClientRequirementsDetail() {
           </div>
         </div>
       </div>
+
+      {/* Requirement View Modal */}
+      <RequirementViewModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        requirement={selectedRequirement}
+      />
     </div>
   );
 }

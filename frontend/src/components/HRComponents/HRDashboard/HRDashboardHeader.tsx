@@ -6,10 +6,10 @@ const HRDashboardHeader = () => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-100">
-            Recent Employees
+            Recent Applications
           </h3>
           <p className="text-sm text-slate-400 mt-1">
-            Manage your team members and their account permissions
+            Manage job applications and track onboarding progress
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -19,7 +19,7 @@ const HRDashboardHeader = () => {
           </button>
           <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
             <Plus className="w-4 h-4" />
-            <span>Add Employee</span>
+            <span>Add Application</span>
           </button>
         </div>
       </div>
